@@ -2,7 +2,7 @@
 
 Mini-projet Cloud Computing, Microservices et API, FIE5, ISIS.
 
-**Membres :** Mohamed Aziz BRAHAM, Ghofrane Bouallegue, Dheker Kraiem et Malek Gbasi.
+**Membres :** Mohamed Aziz BRAHAM, Ghofrane BOUALLEGUE, Dheker KRAIEM et Malek GABSI.
 
 API REST développée avec **Python 3.12, FastAPI et SQLite**, conteneurisée avec Docker et préparée pour Render (plan gratuit).
 
@@ -12,7 +12,6 @@ API REST développée avec **Python 3.12, FastAPI et SQLite**, conteneurisée av
 - API publique : https://mini-projet-groupe-1.onrender.com
 - Swagger public : https://mini-projet-groupe-1.onrender.com/docs
 - Swagger local : http://localhost:8000/docs
-- Schéma OpenAPI : http://localhost:8000/openapi.json
 
 ## Démarrage avec Docker
 
