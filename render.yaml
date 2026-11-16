@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: stages-api
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_PATH
+        value: /app/data/stages.db

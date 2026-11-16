@@ -1,0 +1,26 @@
+name: Tests et image Docker
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: python -m pytest -q
+      - run: docker build -t stages-api:test .
+      - name: Verification du conteneur
+        shell: bash
+        run: |
+          docker run -d --name stages-test -p 8000:8000 stages-api:test
+          trap 'docker logs stages-test; docker rm -f stages-test' EXIT
+          for i in {1..30}; do
+            if curl --fail --silent http://localhost:8000/health; then break; fi
+            sleep 2
+          done
+          python scripts/smoke_test.py http://localhost:8000
