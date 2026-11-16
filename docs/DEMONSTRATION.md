@@ -1,5 +1,7 @@
 # Démonstration Swagger et preuves
 
+Les captures déjà réalisées sur Render sont fournies dans `captures/` : `01-swagger-public.jpg`, `02-creation-public.jpg`, `03-liste-public.jpg`, `04-modification-public.jpg`, `05-suppression-public.jpg`, `06-introuvable-public.jpg` et `08-render-live.jpg`. Les noms du tableau ci-dessous sont des suggestions pour une nouvelle démonstration. Le cas 422 a été vérifié par le script distant ; sa capture est facultative et n'est pas incluse.
+
 Utiliser `/docs` sur l'API locale ou publique. Pour chaque opération, ouvrir le bloc, cliquer **Try it out**, saisir les paramètres puis **Execute**. Conserver l'identifiant renvoyé à la création.
 
 | Étape | Action | Résultat à vérifier | Capture suggérée |

@@ -1,5 +1,15 @@
 # Déployer sur Render
 
+## Service déployé pour le groupe
+
+- URL publique : https://mini-projet-groupe-1.onrender.com
+- Swagger : https://mini-projet-groupe-1.onrender.com/docs
+- Tableau de bord : https://dashboard.render.com/web/srv-dbthi48u01pc73efqdrg
+- Configuration observée : Docker, Free, branche `main`, health check `/health`.
+- Source : URL du dépôt Git public. Après un push, utiliser **Manual Deploy > Deploy latest commit** pour publier les modifications. L'intégration automatique GitHub n'a pas été étendue.
+
+Les instructions ci-dessous permettent de reproduire le déploiement ; il n'est pas nécessaire de créer un deuxième service.
+
 ## Configuration attendue
 
 | Paramètre | Valeur |

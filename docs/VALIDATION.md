@@ -9,7 +9,15 @@
 | Conteneur | **Démarré**, utilisateur `appuser` |
 | Swagger dans Docker | **Accessible** à `http://127.0.0.1:8000/docs` |
 | Test HTTP dans Docker | **Réussi** : création, consultation, liste, modification, suppression, 404 et 422 |
-| Déploiement Render | En cours de préparation ; aucune URL publique vérifiée à ce stade |
+| GitHub Actions | **Réussi** : tests Python, construction Docker et test HTTP du conteneur |
+| Déploiement Render | **Live**, plan **Free**, runtime **Docker** |
+| API publique | **Accessible** : https://mini-projet-groupe-1.onrender.com |
+| Swagger public | **Accessible** : https://mini-projet-groupe-1.onrender.com/docs |
+| Test HTTP distant | **Réussi** : cycle CRUD, validation 422 et erreurs 404 |
+
+Déploiement initial vérifié sur le commit `64d6449432ad32b541ed67494f8caf33c7efb1f8`.
+Exécution GitHub Actions réussie : https://github.com/mohamedazizbraham/mini-projet-groupe-1/actions/runs/43890352570.
+Service Render : `srv-dbthi48u01pc73efqdrg`. Le service a été créé à partir du dépôt public et doit être redéployé manuellement après une modification du code.
 
 Un avertissement de dépréciation de Starlette indique que son client de test évolue de `httpx` vers `httpx2`. Il ne fait pas échouer les tests avec les versions fixées dans le projet.
 
@@ -34,4 +42,4 @@ Les identifiants peuvent différer d'une exécution à l'autre.
 
 ## Preuves
 
-Les captures dans `captures/` portant la mention `local` montrent l'application exécutée dans Docker sur la machine de développement. Elles ne prouvent pas un déploiement public. La validation Render doit être renseignée après observation du service en ligne et exécution du test distant.
+Les captures dans `captures/` portant la mention `local` montrent l'application exécutée dans Docker sur la machine de développement. Les captures `public` montrent les réponses Swagger de l'API hébergée sur Render. `08-render-live.jpg` montre le service gratuit et son statut Live. Le fichier `test-distant.txt` contient le résultat du test HTTP exécuté sur l'URL publique.

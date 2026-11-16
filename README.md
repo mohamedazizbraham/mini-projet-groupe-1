@@ -9,7 +9,8 @@ API REST développée avec **Python 3.12, FastAPI et SQLite**, conteneurisée av
 ## Liens
 
 - Dépôt : https://github.com/mohamedazizbraham/mini-projet-groupe-1
-- URL Render : consulter `docs/VALIDATION.md` pour le statut réel et l'URL après déploiement.
+- API publique : https://mini-projet-groupe-1.onrender.com
+- Swagger public : https://mini-projet-groupe-1.onrender.com/docs
 - Swagger local : http://localhost:8000/docs
 - Schéma OpenAPI : http://localhost:8000/openapi.json
 
@@ -92,7 +93,10 @@ Le premier test utilise une base temporaire distincte pour chaque scénario. Le 
 - [Guide Render](docs/DEPLOIEMENT.md)
 - [Scénario Swagger et captures à fournir](docs/DEMONSTRATION.md)
 - [Présentation technique et répartition proposée](docs/RAPPORT.md)
+- [Dossier PDF avec les preuves de fonctionnement](docs/Dossier-mini-projet-groupe-1.pdf)
 - [Résultats effectivement vérifiés](docs/VALIDATION.md)
+
+Le service Render a été créé à partir de l'URL du dépôt public. Pour publier une modification, pousser le code sur GitHub puis choisir **Manual Deploy > Deploy latest commit** dans Render ; ne pas supposer qu'un push déclenche automatiquement un déploiement dans cette configuration.
 
 ## Architecture et limites
 

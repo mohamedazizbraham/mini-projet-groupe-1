@@ -1,0 +1,12 @@
+OK GET /health -> 200
+OK POST /stages -> 201
+OK GET /stages/1 -> 200
+OK GET /stages?offset=0&limit=1000 -> 200
+OK PUT /stages/1 -> 200
+OK GET /stages/1 -> 200
+OK POST /stages -> 422
+OK DELETE /stages/1 -> 204
+OK GET /stages/1 -> 404
+OK PUT /stages/1 -> 404
+OK DELETE /stages/1 -> 404
+SUCCES : cycle CRUD, validation et erreurs 404 verifies.
