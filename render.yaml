@@ -5,5 +5,11 @@ services:
     plan: free
     healthCheckPath: /health
     envVars:
+      - key: AUTH_USERNAME
+        value: groupe1
+      - key: AUTH_PASSWORD_HASH
+        sync: false
+      - key: JWT_SECRET_KEY
+        generateValue: true
       - key: DATABASE_PATH
         value: /app/data/stages.db

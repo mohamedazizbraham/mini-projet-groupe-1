@@ -1,4 +1,14 @@
-# État de validation - 16 novembre 2026
+# État de validation
+
+## Version 2 avec authentification - 19 novembre 2026
+
+Suite locale : **40 tests réussis**. La suite couvre le CRUD authentifié, les identifiants incorrects, les six routes protégées sans jeton, les jetons expirés ou modifiés, le sujet et le destinataire incorrects, l’algorithme non autorisé, la configuration absente et la déclaration OpenAPI.
+
+L’image Docker v2 a également été construite avec succès le 19 novembre. Les tests couvrent aussi Sign up, Sign in, les doublons, la séparation des stages entre comptes, le stockage des hashes et la migration de la base existante.
+
+La validation du déploiement v2 sera ajoutée après vérification effective sur Render. Les résultats ci-dessous sont ceux du déploiement initial v1.
+
+## Historique du 16 novembre 2026
 
 ## Vérifications réalisées
 

@@ -7,6 +7,8 @@ PAYLOAD = dict(nom_etudiant="Camille Exemple", entreprise="Entreprise Demo", int
 @pytest.fixture
 def client(tmp_path):
     with TestClient(create_app(tmp_path / "test.db")) as client:
+        token = client.post('/auth/token', data={'username':'test-user','password':'Test-password-123456'}).json()['access_token']
+        client.headers['Authorization'] = 'Bearer ' + token
         yield client
 
 def test_crud(client):
@@ -47,8 +49,11 @@ def test_put_requires_complete_body(client):
 def test_persistence(tmp_path):
     db = tmp_path / "persistent.db"
     with TestClient(create_app(db)) as first:
+        token = first.post('/auth/token', data={'username':'test-user','password':'Test-password-123456'}).json()['access_token']
+        first.headers['Authorization'] = 'Bearer ' + token
         created = first.post("/stages", json=PAYLOAD).json()
     with TestClient(create_app(db)) as second:
+        second.headers['Authorization'] = 'Bearer ' + token
         assert second.get(f"/stages/{created['id']}").json() == created
 
 def test_sql_and_pagination(client):

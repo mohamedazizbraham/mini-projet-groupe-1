@@ -17,7 +17,11 @@ jobs:
       - name: Verification du conteneur
         shell: bash
         run: |
-          docker run -d --name stages-test -p 8000:8000 stages-api:test
+          export AUTH_USERNAME=ci-test
+          export AUTH_PASSWORD=Test-only-password-123456
+          export JWT_SECRET_KEY=$(python -c 'import secrets; print(secrets.token_urlsafe(48))')
+          export AUTH_PASSWORD_HASH=$(python -c 'import os; from pwdlib import PasswordHash; print(PasswordHash.recommended().hash(os.environ["AUTH_PASSWORD"]))')
+          docker run -d --name stages-test -p 8000:8000 -e AUTH_USERNAME -e AUTH_PASSWORD_HASH -e JWT_SECRET_KEY stages-api:test
           trap 'docker logs stages-test; docker rm -f stages-test' EXIT
           for i in {1..30}; do
             if curl --fail --silent http://localhost:8000/health; then break; fi

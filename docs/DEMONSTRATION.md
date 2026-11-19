@@ -1,5 +1,11 @@
 # Démonstration Swagger et preuves
 
+## Version 2 avec authentification
+
+Commencer par ouvrir Swagger et exécuter GET `/stages` sans connexion : la réponse doit être 401. Créer un compte avec **POST /auth/signup** (JSON username/password), puis se connecter avec **POST /auth/signin**. Cliquer ensuite **Authorize**, saisir ces identifiants, valider et fermer la fenêtre. GET `/auth/me` doit retourner l’identifiant du compte. Reprendre alors le cycle CRUD décrit ci-dessous. Ne jamais capturer un mot de passe, un jeton ou un en-tête Authorization complet.
+
+Les captures datées du 16 novembre correspondent à la version 1, avant l’ajout de l’authentification. Elles restent une illustration historique du CRUD et du premier déploiement ; elles ne constituent pas une preuve de la protection JWT.
+
 Les captures déjà réalisées sur Render sont fournies dans `captures/` : `01-swagger-public.jpg`, `02-creation-public.jpg`, `03-liste-public.jpg`, `04-modification-public.jpg`, `05-suppression-public.jpg`, `06-introuvable-public.jpg` et `08-render-live.jpg`. Les noms du tableau ci-dessous sont des suggestions pour une nouvelle démonstration. Le cas 422 a été vérifié par le script distant ; sa capture est facultative et n'est pas incluse.
 
 Utiliser `/docs` sur l'API locale ou publique. Pour chaque opération, ouvrir le bloc, cliquer **Try it out**, saisir les paramètres puis **Execute**. Conserver l'identifiant renvoyé à la création.

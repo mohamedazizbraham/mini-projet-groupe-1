@@ -5,6 +5,8 @@ __pycache__
 data
 *.db
 .env
+.env.*
+acces-prives.json
 tests
 docs
 scripts

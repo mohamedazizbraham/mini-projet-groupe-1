@@ -1,5 +1,9 @@
 # Déployer sur Render
 
+## Ajout de l’authentification en version 2
+
+Avant de déployer la version 2, configurer `JWT_SECRET_KEY` dans Environment (clé aléatoire de 32 caractères minimum). `AUTH_USERNAME` et `AUTH_PASSWORD_HASH` sont facultatifs pour créer un compte initial. Les autres comptes se créent avec Sign up. La clé et les hashes restent privés ; ne pas les enregistrer dans GitHub. Voir [AUTHENTIFICATION.md](AUTHENTIFICATION.md). Le contrôle `/health` reste public afin que Render puisse vérifier le service. Les opérations `/stages` exigent désormais une connexion.
+
 ## Service déployé pour le groupe
 
 - URL publique : https://mini-projet-groupe-1.onrender.com

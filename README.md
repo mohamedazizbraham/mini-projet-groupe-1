@@ -15,6 +15,8 @@ API REST développée avec **Python 3.12, FastAPI et SQLite**, conteneurisée av
 
 ## Démarrage avec Docker
 
+Avant le premier lancement, installer les dépendances Python puis exécuter `python scripts/configure_auth.py`. Ce script crée la configuration privée `.env` et le fichier d'accès `acces-prives.json`. Ne pas les publier.
+
 Installer et démarrer Docker Desktop, puis ouvrir un terminal à la racine du projet :
 
 ```sh
@@ -33,10 +35,10 @@ Pour montrer séparément les étapes demandées dans l'énoncé :
 
 ```sh
 docker build -t stages-api .
-docker run --name stages-demo -d -p 127.0.0.1:8000:8000 stages-api
+docker run --name stages-demo -d -p 127.0.0.1:8000:8000 -e AUTH_USERNAME -e AUTH_PASSWORD_HASH -e JWT_SECRET_KEY stages-api
 ```
 
-Arrêter d'abord le service Compose si le port 8000 est déjà occupé. Le lancement direct ci-dessus ne monte pas de volume : sa base disparaît lorsque le conteneur est supprimé.
+Arrêter d'abord le service Compose si le port 8000 est déjà occupé. Le lancement direct suppose que les trois variables d'authentification sont déjà définies dans le terminal ; préférer Compose qui charge `.env`. Le lancement direct ne monte pas de volume : sa base disparaît lorsque le conteneur est supprimé.
 
 ## Démarrage sans Docker
 
@@ -45,17 +47,24 @@ Dans PowerShell, avec Python 3.12 installé :
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+.\.venv\Scripts\python.exe scripts/configure_auth.py
+.\.venv\Scripts\python.exe scripts/run_local.py
 ```
 
 Sous Linux/macOS, utiliser `python3 -m venv .venv` puis `.venv/bin/python` à la place de `.\.venv\Scripts\python.exe`.
 
 ## Endpoints
 
+La version 2 permet **Sign up** (`POST /auth/signup`) et **Sign in** (`POST /auth/signin`) avec un corps JSON `username` / `password`. Chaque compte gère uniquement ses propres stages. Dans Swagger, après inscription, cliquer **Authorize** et saisir les identifiants du compte. Le jeton expire après 30 minutes. Voir [le guide d'authentification](docs/AUTHENTIFICATION.md).
+
 | Méthode | Chemin | Rôle | Succès |
 |---|---|---|---|
 | GET | `/` | Informations du service | 200 |
 | GET | `/health` | Disponibilité de l'API et de la base | 200 |
+| POST | `/auth/token` | Connexion par formulaire username/password | 200 |
+| POST | `/auth/signup` | Créer un compte avec username/password en JSON | 201 |
+| POST | `/auth/signin` | Connexion avec username/password en JSON | 200 |
+| GET | `/auth/me` | Compte connecté, avec jeton | 200 |
 | POST | `/stages` | Créer un stage | 201 |
 | GET | `/stages` | Lister les stages, triés par identifiant | 200 |
 | GET | `/stages/{id}` | Consulter un stage | 200 |
@@ -92,6 +101,7 @@ Le premier test utilise une base temporaire distincte pour chaque scénario. Le 
 - [Guide Render](docs/DEPLOIEMENT.md)
 - [Scénario Swagger et captures à fournir](docs/DEMONSTRATION.md)
 - [Présentation technique et répartition proposée](docs/RAPPORT.md)
+- [Rapport Word modifiable de la version authentifiée](docs/Rapport-authentification.docx)
 - [Dossier PDF avec les preuves de fonctionnement](docs/Dossier-mini-projet-groupe-1.pdf)
 - [Résultats effectivement vérifiés](docs/VALIDATION.md)
 
@@ -109,7 +119,7 @@ flowchart LR
 
 Un service suffit pour le domaine demandé. Le projet illustre une API métier déployable indépendamment, sans prétendre constituer une architecture distribuée à plusieurs microservices.
 
-L'API pédagogique est ouverte, sans authentification : **utiliser uniquement des données fictives**. Toute personne connaissant l'URL peut consulter, créer, modifier ou supprimer les stages. Les requêtes SQL sont paramétrées et le conteneur tourne sans privilèges administrateur. Une utilisation réelle nécessiterait notamment authentification, autorisations et stockage persistant.
+Les routes de gestion des stages sont protégées par JWT. L'inscription crée un compte individuel ; chaque compte accède uniquement à ses propres stages, sans rôle administrateur. Les mots de passe sont hachés avec Argon2 et les jetons expirent après 30 minutes. **Utiliser uniquement des données fictives**. Une utilisation réelle nécessiterait notamment une limitation des tentatives, une récupération des comptes et un stockage persistant. Les comptes sont eux aussi perdus si SQLite est effacé par Render.
 
 Sur Render gratuit, le stockage local est éphémère : une mise en veille, un redémarrage ou un redéploiement peut effacer SQLite. Le premier accès après une veille peut prendre du temps. Ces limites sont compatibles avec l'exercice pédagogique ; elles ne conviennent pas à une gestion réelle des stages.
 

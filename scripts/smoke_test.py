@@ -2,14 +2,21 @@
 import json
 import sys
 import uuid
+import os
+import getpass
+from urllib.parse import urlencode
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 base = (sys.argv[1] if len(sys.argv) > 1 else "http://localhost:8000").rstrip("/")
+access_token = None
 
 def request(method, path, payload=None, expected=200):
     data = None if payload is None else json.dumps(payload).encode()
-    req = Request(base + path, data=data, method=method, headers={"Content-Type": "application/json"})
+    headers = {"Content-Type": "application/json"}
+    if access_token:
+        headers['Authorization'] = 'Bearer ' + access_token
+    req = Request(base + path, data=data, method=method, headers=headers)
     try:
         with urlopen(req, timeout=120) as response:
             status, body = response.status, response.read()
@@ -21,6 +28,16 @@ def request(method, path, payload=None, expected=200):
     return json.loads(body) if body else None
 
 def main():
+    global access_token
+    request('GET', '/stages', expected=401)
+    username = os.getenv('AUTH_USERNAME') or input('Identifiant : ')
+    password = os.getenv('AUTH_PASSWORD') or getpass.getpass('Mot de passe : ')
+    req = Request(base+'/auth/token', data=urlencode({'username':username,'password':password}).encode(),
+                  headers={'Content-Type':'application/x-www-form-urlencoded'}, method='POST')
+    with urlopen(req,timeout=120) as response:
+        access_token = json.load(response)['access_token']
+    print('OK POST /auth/token -> 200 (jeton non affiche)')
+    assert request('GET','/auth/me')['username']==username
     payload = dict(nom_etudiant="Etudiant Fictif " + uuid.uuid4().hex[:8], entreprise="Entreprise Demo", intitule="Test API Cloud", date_debut="2027-02-01", date_fin="2027-07-31")
     path = None
     try:
